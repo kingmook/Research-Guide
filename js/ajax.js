@@ -2,7 +2,7 @@
 
 //Grab the user information from the page and send it to be processed
 $(function addUser () {
-  	 //Hide the error messages
+  	//Hide the error messages
     $('.error').hide();
     //When the create button is pressed
     $(".addUser").click(function() {
@@ -11,6 +11,7 @@ $(function addUser () {
   	  var realName = $("input#realName").val();
 	  var campusId = $("input#campusId").val();
 	  var addedBy = $("input#addedBy").val();
+	  
 		if (realName == "") {
 			//show the error if the field is empty
 			$("label#realName_error").show();
@@ -55,8 +56,7 @@ $(function addUser () {
 				document.getElementById('currentAdmins').innerHTML+=response;
     		}
 		});  
-		return false;
-      
+		return false;      
     });
 });
 
@@ -65,12 +65,12 @@ $(function addGuide () {
     $('.error').hide();
     //When the create button is pressed
     $(".addGuide").click(function() {
-      // validate the name input field      
-      $('.error').hide();
-  	  var subject = $("input#subject").val();
-	  var code = $("input#code").val();
-	  var link = $("input#link").val();
-	  var addedBySub = $("input#addedBySub").val();
+		// validate the name input field      
+		$('.error').hide();
+		var subject = $("input#subject").val();
+		var code = $("input#code").val();
+		var link = $("input#link").val();
+		var addedBySub = $("input#addedBySub").val();
 		if (subject == "") {
 			//show the error if the field is empty
 			$("label#subject_error").show();
@@ -90,8 +90,8 @@ $(function addGuide () {
 			return false;
 		}
 
-      //create the POST values to pass to callBack.php
-      var dataString = 'subject=' + subject + '&code=' + code + '&link=' + link + '&addedBySub=' + addedBySub + '&action=' + 'addguide';  		
+		//create the POST values to pass to callBack.php
+		var dataString = 'subject=' + subject + '&code=' + code + '&link=' + link + '&addedBySub=' + addedBySub + '&action=' + 'addguide';  		
 		$.ajax({  
 		  type: "POST",  
 		  url: "update.php",	
@@ -121,12 +121,10 @@ $(function addGuide () {
 				document.getElementById('createStatusGuide').innerHTML+='<span style="color:green;">Added Guide: '+response+'</span>';
     		}
 		});  
-		return false;
-      
+		return false;      
     });
 });
-
-//Check and then pass to delete etherpads on user selection  
+//Check and then pass to delete on user selection  
 function checkDel(guideID, guideName){
 		//Check if they really want to delete the guide
 		var answer = confirm('Delete the LibGuide for: '+guideName);

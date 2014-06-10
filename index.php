@@ -76,9 +76,11 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 				echo '<p>Ensure the correct CampusID is entered for new users. This tool does not check for <br /> the validity of entered CampusID\'s. All fields are required.</p>';
 				echo '<form name="addUsers" action="">
 					<label for="realName">Full Name:&nbsp;</label>
-					<input type="text" name="realName" id="realName" /><br />
+					<input type="text" name="realName" id="realName" />
+					<label class="error" id="realName_error" style="color:#CC0000;display:none;"/>Please Enter your Full name. ie. Isaak Brock</label><br />
 					<label for="campusId">Campus ID:</label>
-					<input type="text" name="campusId" id="campusId" />
+					<input type="text" name="campusId" id="campusId" title="ie. aa00aa" required/>
+					<label class="error" id="campusId_error" style="color:#CC0000;display:none;"/>Please Enter your CampusID. ie. aa00aa</label><br />					
 					<input type="hidden" name="addedBy" id="addedBy" value="'.$context->info['lis_person_sourcedid'].'" /><br />
 					<input type="submit" name="addUser" value="Add User" class="addUser" /></form></div>			
 				';
@@ -112,11 +114,14 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 				//Add new libguide form
 				echo '<form name="addGuide" action="">
 				<label for="subject">Subject:</label>
-				<input type="text" name="subject" size="50"  id="subject" /><br />
+				<input type="text" name="subject" size="50" id="subject"/>
+				<label class="error" id="subject_error" style="color:#CC0000;display:none;"/>Please Enter a Subject. ie. Accounting</label><br />					
 				<label for="code">Code:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-				<input type="text" name="code" id="code" size="50" /><br />
+				<input type="text" name="code" id="code" size="10"/>
+				<label class="error" id="code_error" style="color:#CC0000;display:none;"/>Please Enter the Code. ie. ACTG or ACTG2P12</label><br />					
 				<label for="link">Link:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-				<input type="text" name="link" size="80" id="link" />
+				<input type="text" name="link" size="80" id="link"/>
+				<label class="error" id="link_error" style="color:#CC0000;display:none;"/>Please Enter the Guide URL. ie. https://www.brocku.ca</label><br />					
 				<input type="hidden" name="addedBySub" id="addedBySub" value="'.$context->info['lis_person_sourcedid'].'" /><br />
 				<input type="submit" name="addGuide" value="Add Guide" class="addGuide" /></form></div>			
 				';
