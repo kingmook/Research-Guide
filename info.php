@@ -10,7 +10,10 @@ $database = "";
 
 //The LTI Credentials for index.php
 //You need to set the LTI Key and LTI Secret
-$lti_auth = array('key' => 'YourKeyHere', 'secret' => 'YourSecretHere');
+$ltiKey = "YourKeyHere";
+$ltiSecret = "YourSecretHere";
+
+$lti_auth = array('key' => $ltiKey, 'secret' => $ltiSecret);
 
 //The secret we're using for the time hashing of ajax requests
 //Should be at least 12 characters long
@@ -26,7 +29,9 @@ $defaultGuide = 'https://www.adefaultwebsite.com';
 //If the LibGuide API should be available for use in the Admin panel for manual refresh
 //and the URL to the bulleted list API listing for LibGuides
 $apiAvailable = TRUE;
-$rawAPI = file_get_contents('http://api.libguides.com/your_api_link_here');
+$apiURL = "http://api.libguides.com/your_api_link_here";
+
+$rawAPI = file_get_contents($apiUrl);
 
 //Support Email shown to users in the tool
 $supportEmail = "support@you.com";
