@@ -31,7 +31,7 @@ $defaultGuide = 'https://www.adefaultwebsite.com';
 $apiAvailable = TRUE;
 $apiURL = "http://api.libguides.com/your_api_link_here";
 
-$rawAPI = file_get_contents($apiUrl);
+$rawAPI = file_get_contents($apiURL);
 
 //Support Email shown to users in the tool
 $supportEmail = "support@you.com";
