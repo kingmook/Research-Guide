@@ -15,7 +15,7 @@ Can deal both with 4 long subject codes (ABED) and 8 long course codes (ABED4F84
 
 Configure the tool in info.php with your DB and support information.
 
-Can use the LibGuide v1 bulleted list of guides API to pull in library research guides automatically. 
+Can use the LibGuide v1 or v2 bulleted list of guides API (widget in V2) to pull in library research guides automatically. 
 To automate this process add cronAdd.php to your CronTab.
 In addition you can allow the user to manually force an API refresh in index.php
 
