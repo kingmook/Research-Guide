@@ -1,7 +1,7 @@
-LibGuide
+Research Guide LTI Forwarder
 ========
 
-##LTI Provider for Library Research Guide Re-direction 
+##LTI Provider for Library Research Guide (LibGuide) Re-direction 
 
 Takes URL input and automatically re-directs students to them when the tool is added to a site.
 Takes the name of the course site and matches the department code (COSC) or course code (COSC2P01) to the setup URLS.
