@@ -10,15 +10,33 @@ $log = "Time started: ".time(). ".<br />";
 //Bring in our info file
 require("info.php");
 
-//A really fragile way of grabbing each link 
-$arrayAPI = explode('<BR>', $rawAPI);
+//A really fragile way of grabbing each V1 link
+if ($apiVersion == 1){
+	$arrayAPI = explode('<BR>', $rawAPI);
+}
+
+//Still fragile way of grabbing API V2 links
+if ($apiVersion == 2){
+	$arrayAPI = explode('<li>', $rawAPI);
+}
 
 //For each link lets do some processing
 foreach ($arrayAPI as $tag){
 	
 	//Parsing the a tag for it's components
-	$url = getHref($tag);
+	//Get the URL
+	if ($apiVersion == 1){
+		$url = getHref($tag);
+	}
+	
+	if ($apiVersion == 2){
+		$url = getHrefv2($tag);
+	}
+	
+	//Get the Subject
 	$subject = getSubject($tag);
+	
+	//Get the subject short code
 	$code = getCode($url);
 	
 	//Make sure everything has parsed properly and there is a 4 or 8 length code
@@ -66,8 +84,26 @@ function getHref($tag){
 		return $url;	
 	}
 	//Likely not a real url. Abort.
-	else { return FALSE; }
-		
+	else { return FALSE; }		
+}
+
+//Takes an <a> tag and rips out the URL for V2 api
+function getHrefv2($tag){
+
+	//Find the first quote and the get ? to grab the actual url from the a href
+	$firstQuote = strpos($tag, '"');
+	$firstQM = strpos($tag, '"', $firstQuote+1);
+	
+	//Strip it down to just the link using previous strpos
+	$url = substr($tag, ($firstQuote+1), (($firstQM-$firstQuote)-1));
+	
+	//Make sure it's more than just http:// in there
+	if (strlen($url) > 7){		
+		//Send back the url
+		return $url;	
+	}
+	//Likely not a real url. Abort.
+	else { return FALSE; }		
 }
 
 //Takes a URL and extracts the subject and/or course number
