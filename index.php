@@ -115,7 +115,7 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 				//Print out the current admins
 				foreach($userResult as $user){
 					//The X and the containing span for hiding on delete
-					echo '<span id="admin-'.$user['uid'].'"><a onclick="delAdmin(\''.$user['campusId'].'\', \''.$user['uid'].'\');"><img src="/library/image/silk/cross.png" height="16" width="16"></a>';
+					echo '<span id="admin-'.$user['uid'].'"><a onclick="delAdmin(\''.$user['campusId'].'\', \''.$user['uid'].'\');"><img src="images/icons/cross.png" height="16" width="16"></a>';
 					//The username
 					echo $user['realName'].'</span><br />';
 				}
@@ -169,7 +169,7 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 				
 				//Print out each guides information
 				foreach($libResult as $aGuide){
-					echo '<tr id="guide-'.$aGuide['cid'].'"><td>'.$aGuide['Name'].'</td><td>'.$aGuide['Code'].'</td><td>'.$aGuide['URL'].'</td><td><a onclick="checkDel(\''.$aGuide['cid'].'\', \''.$aGuide['Name'].'\');"><img src="/library/image/silk/cross.png" height="16" width="16"></a></td></tr>';	
+					echo '<tr id="guide-'.$aGuide['cid'].'"><td>'.$aGuide['Name'].'</td><td>'.$aGuide['Code'].'</td><td>'.$aGuide['URL'].'</td><td><a onclick="checkDel(\''.$aGuide['cid'].'\', \''.$aGuide['Name'].'\');"><img src="images/icons/cross.png" height="16" width="16"></a></td></tr>';	
 				}
 				echo '</tbody></table>';		
 				//The writable config
