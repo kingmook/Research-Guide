@@ -20,10 +20,9 @@ if (time() <= ($timeUnHash+3600)){
 	$dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	//Make sure it's an ajax request - assuming they don't fake it
-	if($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+	if($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {	
 		//Check if the refer is on our domain - assuming they don't fake it
 		if(@isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']==$hostUrl){
-
 			//If we're adding a new admin user
 			if($_POST['action']=="adduser"){
 			
@@ -58,7 +57,7 @@ if (time() <= ($timeUnHash+3600)){
 					$uid = $dbConnection->lastInsertId();
 					
 					//Add the x and the action here for removal
-					echo '<span id="admin-'.$uid.'"><a onclick="delAdmin(\''.$_POST['campusId'].'\', \''.$uid.'\');"><img src="/library/image/silk/cross.png" height="16" width="16"></a>'.$_POST['realName'].'</span>';
+					echo '<span id="admin-'.$uid.'"><a onclick="delAdmin(\''.$_POST['campusId'].'\', \''.$uid.'\');"><img src="images/icons/cross.png" height="16" width="16"></a>'.$_POST['realName'].'</span>';
 				}
 			}
 			//If we're deleting an admin user
@@ -118,8 +117,11 @@ if (time() <= ($timeUnHash+3600)){
 				//echo ($exec->execute(array(0,0)));
 			}
 			//They hit this page with no info
-			else echo 'An error(1) has occurred.  Please contact '.$supportEmail.'';
-		}	
+			else echo 'An error(0) has occurred.  Please contact '.$supportEmail.'';
+		}
+		//Bad referrer
+		else echo 'An error(1) has occured. Please contact '.$supportEmail.'';
+				
 	}
 	//Something is going on - no access
 	else echo 'An error(2) has occurred. Please contact '.$supportEmail.'';
