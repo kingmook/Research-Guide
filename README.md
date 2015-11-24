@@ -22,3 +22,5 @@ In addition you can allow the user to manually force an API refresh in index.php
 * Uses jQuery Datatables (https://datatables.net/)  to present the list of libguides to administrators.
 * Uses PHP BLTI (http://developers.imsglobal.org/phpcode.html) to make an LTI connection.
 * Uses Silk Icons (http://www.famfamfam.com/lab/icons/silk/) because they're great.
+
+Detailed configuration information can be found at: https://docs.google.com/document/d/1eQmtEHgmCcM5TVFVTvrfzvnTEr7lswc6rr3nmXRqLq4/edit?usp=sharing
