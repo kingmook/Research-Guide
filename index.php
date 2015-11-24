@@ -45,7 +45,7 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 			if ($context->valid===TRUE){
 				
 				//Hash the time
-				$timeHash = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $timeKey, (time()), MCRYPT_MODE_CBC);
+				$timeHash = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $timeKey, (time()), MCRYPT_MODE_CBC, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
 				
 				//Make a cookie to decrease ajax faking
 				$_SESSION['secure']=$timeHash;
