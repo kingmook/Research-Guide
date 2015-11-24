@@ -7,7 +7,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);	
 
->>>>>>> Added default IV for mcrypt to remove warning
 //Start the session
 session_start();
 
@@ -15,11 +14,7 @@ session_start();
 require_once("info.php");
 
 //Make sure the admin user has a time session set
-<<<<<<< HEAD
-$timeUnHash = mcrypt_decrypt (MCRYPT_RIJNDAEL_128, $timeKey, $_SESSION['secure'], MCRYPT_MODE_CBC);
-=======
 $timeUnHash = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $timeKey, $_SESSION['secure'], MCRYPT_MODE_CBC, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
->>>>>>> Added default IV for mcrypt to remove warning
 
 //Make sure the ajax request isn't over an hour old
 if (time() <= ($timeUnHash+3600)){
