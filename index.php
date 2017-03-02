@@ -11,6 +11,9 @@ require_once("info.php");
 // Load up the LTI Support code
 require_once 'ims-blti/blti.php';
 
+//Bring in the LTI data to Brock data functions
+require_once("ltiToBrock.php");
+
 // Initialize, all secrets as 'secret', do not set session, and do not redirect
 $context = new BLTI($lti_auth['secret'], false, false);
 
@@ -76,7 +79,7 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 				echo '<h1 style="padding-top:20px">LibGuide-Administration</h1>';
 				
 				//Return to the guide - DEBUG (see faked at end)
-				echo '<a href="'.$_SERVER['PHP_SELF'].'?course='.$_POST['context_id'].'">Student view of associated LibGuide for current course: '.$_POST['context_id'].'</a><br /><br />';
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?course='.$_POST['context_id'].'&sourcedid='.$_POST['lis_course_offering_sourcedid'].'">Student view of associated LibGuide for current course: '.$_POST['context_id'].'</a><br /><br />';
 				
 				//Anchor for all the options on the page
 				echo '<p>Jump to: <a href="#addUser">Add Admin User</a> - <a href="#new">Add New Guide</a> - <a  href="#current">Edit Current Guide</a>';
@@ -208,23 +211,18 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 			//Close the head and open the body
 			echo '</head><body>';
 		
-			//Grab the course name from the lti object
+			//Send the course name and lis_course_offering_sourcedid for code parsing
 			if(isset($context->info['context_id'])){
-				$title = $context->info['context_id'];
+				$codes = translateLtiToBrock($context->info['lis_course_offering_sourcedid'], $context->info['context_id']);
 			}
-			//Or the get variable
+			//Or the get variable and send it for code parsing
 			else{
-				$title = $_GET['course'];
+				$codes = translateLtiToBrock($_GET['lis_course_offering_sourcedid'], $_GET['course']);
 			}
 			
-			//****Check if the 4 & 8 digit course code exists****//
-			//Check if there is a dash (signifying multiple courses) and grab the four digit code
-			$dashLoc = strrpos($title, "-");
-			//If it does have a dash add 1 to start at the next character
-			if ($dashLoc !== 0){ $dashLoc++;}
-			//Substring out the course name and add a space
-			$fourCode = substr($title, 0, 4);
-			$eightCode = $fourCode.substr($title, ($dashLoc+4), 4);			
+			//Assign the codes returned from the translate function
+			$fourCode = $codes[0];
+			$eightCode = $codes[1];		
 			
 			//MYSQL Query and location push	for dept code	
 			$statement = 'SELECT `url` FROM `guideInfo` WHERE `Code` = ?';
