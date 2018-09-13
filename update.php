@@ -21,8 +21,6 @@ if (time() <= ($timeUnHash+3600)){
 
 	//Make sure it's an ajax request - assuming they don't fake it
 	if($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {	
-		//Check if the refer is on our domain - assuming they don't fake it
-		if(@isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']==$hostUrl){
 			//If we're adding a new admin user
 			if($_POST['action']=="adduser"){
 			
@@ -118,10 +116,6 @@ if (time() <= ($timeUnHash+3600)){
 			}
 			//They hit this page with no info
 			else echo 'An error(0) has occurred.  Please contact '.$supportEmail.'';
-		}
-		//Bad referrer
-		else echo 'An error(1) has occured. Please contact '.$supportEmail.'';
-				
 	}
 	//Something is going on - no access
 	else echo 'An error(2) has occurred. Please contact '.$supportEmail.'';
