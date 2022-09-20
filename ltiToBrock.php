@@ -13,9 +13,7 @@ function translateLtiToBrock($lis_course_offering_sourcedid, $title, $userDefaul
 
 		if (is_valid_domain_name(strstr($lis_course_offering_sourcedid,':',true))) { //Does the lis_course_offering_sourcedid look like a TLD? Then this isn't Sakai.
 			$offeringSourcedidArray = str_split($lis_course_offering_sourcedid, strpos($lis_course_offering_sourcedid,":")+1);
-			print_r($offeringSourcedidArray);
 			$sourcedidNG = explode("-", $offeringSourcedidArray[1]);
-
 			
 			//Generate the four and eight code
 			$fourCode = $sourcedidNG[4];
