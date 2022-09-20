@@ -32,14 +32,22 @@ echo '<link href="css/styles.css" type="text/css" rel="stylesheet" media="all" /
 
 //Make sure they have sent a course id
 if (isset($context->info['context_id']) || isset($_GET['course']) ){
+	
+		//Find a username
+		if(isset($context->info['lis_person_sourcedid'])) $lmsUserName = $context->info['lis_person_sourcedid']; //Sakai method
+		elseif (isset($context->info['ext_d2l_username'])) $lmsUserName = $context->info['ext_d2l_username'];  //D2L method
+		else {
+			$lmsUserName=strstr($context->info['lis_person_contact_email_primary'],'@',true); //Most other platforms
+		}
+	
 		//---------------------Login to Admin Area------------------------------//
 		//Start a session
 		session_start();
-		
+	
 		//Hit the database to check if they are an administrator
 		$statement = 'SELECT * FROM `adminUsers` WHERE `campusId` = ?';
 		$exec = $dbConnection->prepare($statement);
-		$exec->execute(array($context->info['lis_person_sourcedid']));
+		$exec->execute(array($lmsUserName));
 		
 		$adminResult = $exec->fetch(PDO::FETCH_ASSOC);
 			
@@ -100,7 +108,7 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 					<label for="campusId">Campus ID:</label>
 					<input type="text" name="campusId" id="campusId" title="ie. aa00aa" required/>
 					<label class="error" id="campusId_error" style="color:#CC0000;display:none;"/>Please Enter your CampusID. ie. aa00aa</label><br />					
-					<input type="hidden" name="addedBy" id="addedBy" value="'.$context->info['lis_person_sourcedid'].'" /><br />
+					<input type="hidden" name="addedBy" id="addedBy" value="'.$lmsUserName.'" /><br />
 					<input type="submit" name="addUser" value="Add User" class="addUser" /></form></div>			
 				';
 
@@ -148,7 +156,7 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 				<label for="link">Link:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 				<input type="text" name="link" size="80" id="link"/>
 				<label class="error" id="link_error" style="color:#CC0000;display:none;"/>Please Enter the Guide URL. ie. https://www.brocku.ca</label><br />					
-				<input type="hidden" name="addedBySub" id="addedBySub" value="'.$context->info['lis_person_sourcedid'].'" /><br />
+				<input type="hidden" name="addedBySub" id="addedBySub" value="'.$lmsUserName.'" /><br />
 				<input type="submit" name="addGuide" value="Add Guide" class="addGuide" /></form></div>			
 				';
 				//The New guide creation status
