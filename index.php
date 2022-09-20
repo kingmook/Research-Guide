@@ -37,7 +37,7 @@ if (isset($context->info['context_id']) || isset($_GET['course']) ){
 		if(isset($context->info['lis_person_sourcedid'])) $lmsUserName = $context->info['lis_person_sourcedid']; //Sakai method
 		elseif (isset($context->info['ext_d2l_username'])) $lmsUserName = $context->info['ext_d2l_username'];  //D2L method
 		else {
-			$lmsUserName=strstr($context->info['lis_person_contact_email_primary'],'@',true); //Most other platforms
+			$lmsUserName = strstr($context->info['lis_person_contact_email_primary'],'@',true); //Most other platforms
 		}
 	
 		//---------------------Login to Admin Area------------------------------//
