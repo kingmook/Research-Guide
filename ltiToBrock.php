@@ -7,12 +7,33 @@
 function translateLtiToBrock($lis_course_offering_sourcedid, $title, $userDefault){
 	
 	//----------First try using the roster approach----------//
-	
-	//Check if lis_course_offering_sourcedid or the custom custom_sourcedid are set	
+
+	//Check if lis_course_offering_sourcedid or the custom custom_sourcedid are set
 	if(isset($lis_course_offering_sourcedid)){
 
-		//First replace the colons with dashes
-		$lis_course_offering_sourcedid = str_replace(":", "-", $lis_course_offering_sourcedid);
+		if (is_valid_domain_name(strstr($lis_course_offering_sourcedid,':',true))) { //Does the lis_course_offering_sourcedid look like a TLD? Then this isn't Sakai.
+			$offeringSourcedidArray = str_split($lis_course_offering_sourcedid, strpos($lis_course_offering_sourcedid,":")+1);
+			$sourcedidNG = explode("-", $offeringSourcedidArray[1]);
+			
+			//Generate the four and eight code
+			$fourCode = $sourcedidNG[4];
+			$eightCode = $sourcedidNG[4].$sourcedidNG[5];
+			
+			//Grab the duration
+			$duration = $sourcedidNG[2];
+			
+			//Grab the term
+			$term = $sourcedidNG[1];
+			
+			//Grab the two digit year
+			$year = substr($sourcedidNG[0],2,4); //NN
+			
+			$status = "sourcedid-NG";
+			
+		} 
+		else { //First replace the colons with dashes - Brock University SAKORA-like
+		
+		$lis_course_offering_sourcedid = str_replace(":", "-", $lis_course_offering_sourcedid); //First replace the colons with dashes - Brock University SAKORA-like
 		
 		//We need to account for multiple sections which are deliniated by a plus +
 		$sourcedidArray = explode("+", $lis_course_offering_sourcedid);
@@ -35,6 +56,7 @@ function translateLtiToBrock($lis_course_offering_sourcedid, $title, $userDefaul
 		$fourCode = $allSections[$defaultSection][3];
 		$eightCode = $allSections[$defaultSection][3].$allSections[$defaultSection][4];
 		
+		
 		//Grab the duration
 		$duration = $allSections[$defaultSection][2];
 
@@ -43,9 +65,10 @@ function translateLtiToBrock($lis_course_offering_sourcedid, $title, $userDefaul
 		
 		//Grab the two digit year
 		$year = substr($allSections[$defaultSection][0], 0, 2);
-
+		
 		//Set status of sourcedid
 		$status = "sourcedid";
+		}
 	}
 	//----------Fallback to name parsing----------//
 	else{
@@ -82,3 +105,11 @@ function translateLtiToBrock($lis_course_offering_sourcedid, $title, $userDefaul
 	//Send the four and eight code representations back
 	return array($fourCode, $eightCode, $duration, $term, $year, $status);	
 }
+
+function is_valid_domain_name($domain_name) {
+	return (preg_match("/^([a-zd](-*[a-zd])*)(.([a-zd](-*[a-zd])*))*$/i", $domain_name) //valid characters check
+	&& preg_match("/^.{1,253}$/", $domain_name) //overall length check
+	&& preg_match("/^[^.]{1,63}(.[^.]{1,63})*$/", $domain_name) ); //length of every label
+}
+
+?>
